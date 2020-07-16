@@ -1,0 +1,18 @@
+version: '3'
+services:
+  zookeeper-server:
+    image: zookeeper
+    container_name: ZookeeperServer
+    tty: false
+  kafka-server:
+    image: wurstmeister/kafka
+    container_name: KafkaServer
+    environment:
+        KAFKA_ZOOKEEPER_CONNECT: ZookeeperServer:2181
+        KAFKA_ADVERTISED_HOST_NAME: localhost
+        KAFKA_CREATE_TOPICS: "topic_name:1:1" 
+    tty: false
+    ports:
+     - "9092:9092"
+    depends_on:
+      - zookeeper-server
